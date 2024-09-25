@@ -2,8 +2,9 @@ import AuthForm from "@/components/AuthForm";
 import { Page, Text } from "@/components/Themed";
 import Button from "@/components/ui/Button";
 import useThemeColor from "@/hooks/useThemeColor";
+import { Image } from "expo-image";
 import { Link, useRouter } from "expo-router";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { StyleSheet } from "react-native";
 
 export default function LoginPage() {
@@ -13,6 +14,13 @@ export default function LoginPage() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Page style={{ justifyContent: "center", paddingHorizontal: 16 }}>
+                <View>
+                    <Image
+                        source={require("../assets/images/login-image.png")}
+                        style={{ height: 233, width: 286 }}
+                    />
+                </View>
+
                 <Text style={styles.loginText}>
                     Login
                 </Text>
@@ -22,7 +30,8 @@ export default function LoginPage() {
                 <Link href="/create-account" asChild>
                     <Button 
                         type="outline" 
-                        color="#F72F2F"
+                        buttonStyle={{ borderColor: "#F72F2F" }}
+                        titleStyle={{ color: "#F72F2F" }}
                         style={{ marginTop: 16 }}
                     >
                         New User? Create Account

@@ -1,26 +1,30 @@
 import React, { useState } from "react"
 import { View, FlatList, Pressable, Text, StyleSheet } from "react-native";
 import { Image } from "expo-image";
+import {Link, router, useRouter} from "expo-router";
 import Styles from "../constants/Styles";
+import { X } from "lucide-react-native";
+import { Category } from "@/types";
+import { CATEGORIES } from "@/utils/constants";
 
-const Categories = [
-    'Rice',
-    'Sharwama',
-    'Pasta',
-    'Grills',
-    'Wraps'
-] as const
 
-type Category = typeof Categories[number];
+export type CategoryName = typeof CATEGORIES[number]['name'];
 
 interface CategoriesListProps {
-    onChange?: (category: Category) => void
+    onChange?: (category: CategoryName|"all") => void,
+    filteredCategories?: Category[]
 }
 
-const CategoriesList: React.FC<CategoriesListProps> = ({ onChange }) => {
-    const [_, setCategory] = useState<Category>();
+const CategoriesList: React.FC<CategoriesListProps> = ({ onChange, filteredCategories }) => {
+    const [_, setCategory] = useState<CategoryName>();
+    const data = filteredCategories ? filteredCategories : CATEGORIES;
 
-    const handleChange = (category: Category) => {
+    const handleChange = (category: CategoryName) => {
+        if (category === _) {
+            setCategory(undefined);
+            onChange && onChange("all");
+            return
+        }
         setCategory(category);
         onChange && onChange(category)
     }
@@ -32,16 +36,24 @@ const CategoriesList: React.FC<CategoriesListProps> = ({ onChange }) => {
             </Text>
             <FlatList
                 horizontal
-                data={Categories}
-                style={{}}                
+                data={data}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item: category }) => (
-                    <Pressable onPress={() => handleChange(category)} style={styles.horizontalListItem}>
-                        <View style={styles.itemContainer}>
-                            <Image style={{ width: 50, height: 50 }} source={require("../assets/images/rice-bowl.svg")} />
-                        </View>
-                        <Text>{category}</Text>
-                    </Pressable>
+                    <Link href={{
+                        pathname: '/category/[id]',
+                        params: { id: category.id }
+                    }} asChild>
+                        <Pressable onPress={() => handleChange(category.name)} style={styles.horizontalListItem}>
+                            <View style={styles.itemContainer}>
+                                {
+                                    category.name === _ ? <X /> :
+
+                                    <Image style={{ width: 50, height: 50 }} source={category.image} />
+                                }
+                            </View>
+                            <Text>{category.name}</Text>
+                        </Pressable>
+                    </Link>
                 )}
             />
         </View>

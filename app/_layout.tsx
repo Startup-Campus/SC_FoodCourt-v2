@@ -10,7 +10,8 @@ import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import "../global.css"
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -22,6 +23,9 @@ export {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
+
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -66,15 +70,17 @@ function RootLayoutNav() {
   }, [])
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <StatusBar/>
-      <Stack initialRouteName={ (session && session.user) ? "main" : "login" } screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="main"/>
-        <Stack.Screen name="vendor"/>
-        <Stack.Screen name="item"/>
-        <Stack.Screen name="login"/>
-        <Stack.Screen name="create-account"/>
-      </Stack>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <StatusBar/>
+        <Stack initialRouteName={ (session && session.user) ? "main" : "login" } screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="main"/>
+          <Stack.Screen name="vendor"/>
+          <Stack.Screen name="item"/>
+          <Stack.Screen name="login"/>
+          <Stack.Screen name="create-account"/>
+        </Stack>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

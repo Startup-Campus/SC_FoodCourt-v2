@@ -15,13 +15,9 @@ import CategoriesList from "../../components/CategoriesList";
 import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react";
 import { Session } from "@supabase/supabase-js";
+import useRestaurant from "@/hooks/useRestaurant";
+import HomeSearch from "@/components/HomeSearch";
 
-const Vendors = [
-    { name: "W Sauce" },
-    { name: "Suya Craze" },
-    { name: "African Kitchen" },
-    { name: "W Sauce" },
-]
 
 
 const Recents = [
@@ -61,6 +57,7 @@ export default function HomePage() {
     const router = useRouter()
     const [session, setSession] = useState<Session | null>(null)
     const [profile, setProfile] = useState<any | null>(null)
+    const [isSearchActive, setIsSearchActive] = useState(false);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -80,18 +77,28 @@ export default function HomePage() {
         })
     }, [])
 
+    const { isLoading, data: restaurant } = useRestaurant();
+
+    if(isSearchActive) {
+        return (
+            <Page  style={{ paddingHorizontal: 16 }}>
+                <HomeSearch setIsSearchActive={setIsSearchActive} />
+            </Page>
+        )
+    }
+
     return (
         <Page style={{ paddingHorizontal: 16 }}>
             <ScrollView contentInset={{ bottom: 128 }} showsVerticalScrollIndicator={false}>
-
-                {/* <Text>Hello There</Text> */}
 
                 <DefaultView>
                     <Text style={{ fontWeight: "800", marginTop: 8 }}>Hi There</Text>
                     <Text style={{ fontWeight: "900", marginVertical: 16, fontSize: 20 }}>What will we be having today?</Text>
                 </DefaultView>
 
-                <Searchbar/>
+                <Pressable onPress={() => setIsSearchActive(true)}>
+                    <Searchbar disable={false}/>
+                </Pressable>
 
                 <CategoriesList/>
 
@@ -130,12 +137,22 @@ export default function HomePage() {
                 <DefaultView>
                     <Text style={{ fontWeight: "900", marginVertical: 16, fontSize: 20 }}>Vendor</Text>
                     {
-                        Vendors.map(({ name }, index) => (
-                            <Pressable onPress={() => router.push(`/vendor/${name.replaceAll(" ", "-")}`)} key={`${name}-${index}`} style={[styles.horizontalListItem, styles.vendorCard]}>
-                                <Image style={{ width: "100%", height: "100%", position: "absolute", zIndex: -10, borderRadius: 12 }} source={require("../../assets/images/food.png")}/>
-                                <Text style={{ color: "#fff" }}>{name}</Text>
-                            </Pressable>
-                        ))
+                        isLoading ? 
+                        <View>
+
+                        </View>
+                        :
+                        <>
+                            {
+                                restaurant?.map((restaurant) => (
+                                    <Pressable onPress={() => router.push(`/vendor/${restaurant.id}`)} key={restaurant.id} style={[styles.horizontalListItem, styles.vendorCard]}>
+                                        <Image style={{ width: "100%", height: "100%", position: "absolute", zIndex: -10, borderRadius: 12 }} source={require("../../assets/images/food.png")}/>
+                                        <Text style={{ color: "#fff" }}>{restaurant.name}</Text>
+                                    </Pressable>
+
+                                ))
+                            }
+                        </>
                     }
                 </DefaultView>
 

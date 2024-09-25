@@ -7,6 +7,7 @@ import { supabase } from "@/utils/supabase";
 import { CheckBox } from "@rneui/themed"
 import useThemeColor from "@/hooks/useThemeColor";
 import { Link, useRouter } from "expo-router";
+import { Lock, Mail } from "lucide-react-native";
 
 interface FormProps {
     formType: "login"|"sign-up"
@@ -109,6 +110,7 @@ const AuthForm: React.FC<FormProps> = ({ formType }) => {
                     onChangeText={(email) => setEmail(email)}
                     autoCapitalize="none"
                     style={{ padding: 16 }}
+                    icon={<Mail stroke={primaryColor}/>}
                 />
                 
                 <Input
@@ -116,6 +118,7 @@ const AuthForm: React.FC<FormProps> = ({ formType }) => {
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
                     style={{ padding: 16 }}
+                    icon={<Lock stroke={primaryColor}/>}
                 />
             </View>
 
@@ -138,7 +141,7 @@ const AuthForm: React.FC<FormProps> = ({ formType }) => {
                 }
             </View>
             
-            <Button loading={loading} color="#F72F2F" style={{ alignSelf: "center" }} titleStyle={{ textAlign: "center", padding: 32 }} onPress={formType === "login" ? signInWithEmail : signUpWithEmail}>
+            <Button loading={loading} color="#F72F2F" style={{ alignSelf: "center", width: "100%" }} titleStyle={{ textAlign: "center", padding: 32 }} onPress={formType === "login" ? signInWithEmail : signUpWithEmail}>
                 Continue
             </Button>
         </View>

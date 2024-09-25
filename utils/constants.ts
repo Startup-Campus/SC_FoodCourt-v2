@@ -1,0 +1,42 @@
+export const CATEGORIES = [
+    {
+        id: "1",
+        name: "Rice",
+        image: require("../assets/images/rice-bowl.svg")
+    },
+    {
+        id: "2",
+        name: "Pasta",
+        image: require("../assets/images/pasta.svg")
+    },
+    {
+        id: "3",
+        name: "Sharwama",
+        image: require("../assets/images/sharwama.svg")
+    },
+    {
+        id: "4",
+        name: "Drinks",
+        image: require("../assets/images/rice-bowl.svg")
+    },
+    {
+        id: "5",
+        name: "Desserts",
+        image: require("../assets/images/rice-bowl.svg")
+    },
+    {
+        id: "6",
+        name: "Grills",
+        image: require("../assets/images/grills.svg")
+    },
+    {
+        id: "7",
+        name: "Sandwiches",
+        image: require("../assets/images/rice-bowl.svg")
+    },
+    {
+        id: "8",
+        name: "Burgers",
+        image: require("../assets/images/burger.svg")
+    }
+] as const

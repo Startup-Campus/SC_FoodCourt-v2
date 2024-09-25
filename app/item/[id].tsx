@@ -9,6 +9,10 @@ import CategoriesList from "../../components/CategoriesList";
 import Header from "../../components/Header";
 import { useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import useSingleRestaurant from "@/hooks/useSingleResturant";
+import { Button } from "@rneui/themed";
+import useCart from "@/hooks/useCart";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Dishes = [
     {
@@ -31,32 +35,29 @@ const Dishes = [
 export default function VendorDetailPage() {
 
     const primaryColor = useThemeColor({}, "primary");
-    const { name } = useLocalSearchParams();
+    const { id, resturantId } = useLocalSearchParams();
 
-    const dishToUse = Dishes.find((dish) => dish.name === name)
+    const { getSingleMenuItem } = useSingleRestaurant(Number(resturantId));
+    const menuItem = getSingleMenuItem(Number(id));
+    const [quantity, setQuantity] = useState(1);
+    const { currentUser } = useCurrentUser();
 
-    const router = useRouter()
+    const { addItem } = useCart(currentUser?.id!)
 
-    const priceTagColor = {
-        color: primaryColor,
-        borderColor: primaryColor,
-        backgroundColor: primaryColor + "50"
-    }
 
-    const [quantity, setQuantity] = useState(1)
 
     return (
         <Page>
             <ScrollView>
-                <Header pageTitle={dishToUse?.name || ""}/>
+                <Header pageTitle={menuItem?.name || ""}/>
                 <View style={{ position: "relative", height: 150, width: "100%" }}>
                     <ImageBackground source={require("../../assets/images/food.png")} style={[Styles.ImageBackground]}/>
                 </View>
 
                 <View>
                     <View>
-                        <Text>{dishToUse?.name}</Text>
-                        <Text>{dishToUse?.description}</Text>
+                        <Text>{menuItem?.name}</Text>
+                        <Text>Category: {menuItem?.category}</Text>
                     </View>
 
                     <View style={{ display: "flex", flexDirection: "row", width: 300, justifyContent: "space-around" }}>
@@ -69,6 +70,18 @@ export default function VendorDetailPage() {
                         </Pressable>
                     </View>
                 </View>
+
+                <Button 
+                    onPress={() => addItem({
+                        user_id: currentUser?.id!,
+                        menu_item_id: menuItem?.id!,
+                        quantity: quantity,
+                    })} 
+                    color="#F72F2F" 
+                    style={{ alignSelf: "center", width: "100%" }} 
+                    title={`Add to Cart (N ${(menuItem?.price || 0) * quantity})`}
+                />
+
 
 
 
