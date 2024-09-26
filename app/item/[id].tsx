@@ -1,115 +1,82 @@
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { Page, Text } from "../../components/Themed";
 import useThemeColor from "../../hooks/useThemeColor";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Image, ImageBackground } from "expo-image";
-import Styles from "../../constants/Styles";
-import Searchbar from "../../components/Searchbar";
-import CategoriesList from "../../components/CategoriesList";
-import Header from "../../components/Header";
-import { useState } from "react";
+import { ImageBackground } from "expo-image";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import useSingleRestaurant from "@/hooks/useSingleResturant";
+import { useState } from "react";
 import { Button } from "@rneui/themed";
+import useSingleRestaurant from "@/hooks/useSingleResturant";
 import useCart from "@/hooks/useCart";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import products from "@/mock/products.json";
 
-const Dishes = [
-    {
-        name: "Mexican Sharwama 1",
-        price: 1500,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-        name: "Mexican Sharwama 2",
-        price: 1100,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-        name: "Mexican Sharwama 3",
-        price: 1600,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },   
-]
-
-export default function VendorDetailPage() {
-
-    const primaryColor = useThemeColor({}, "primary");
+export default function MenuItemDetail() {
+    const router = useRouter();
     const { id, resturantId } = useLocalSearchParams();
-
     const { getSingleMenuItem } = useSingleRestaurant(Number(resturantId));
     const menuItem = getSingleMenuItem(Number(id));
     const [quantity, setQuantity] = useState(1);
     const { currentUser } = useCurrentUser();
-
-    const { addItem } = useCart(currentUser?.id!)
-
+    const { addItem } = useCart(currentUser?.id!);
 
 
     return (
-        <Page>
-            <ScrollView>
-                <Header pageTitle={menuItem?.name || ""}/>
-                <View style={{ position: "relative", height: 150, width: "100%" }}>
-                    <ImageBackground source={require("../../assets/images/food.png")} style={[Styles.ImageBackground]}/>
+        <Page className="flex-1 bg-white">
+            <View className="relative h-48">
+                <ImageBackground
+                    source={require("../../assets/images/food.png")}
+                    className="w-full h-full"
+                    resizeMode="cover"
+                >
+                    <View className="absolute top-0 left-0 p-4 flex-row justify-between items-center w-full">
+                        <Pressable onPress={() => router.back()}>
+                            <FontAwesome name="bars" size={24} color="black" />
+                        </Pressable>
+                        <Text className="text-black text-lg font-semibold">Mexican Shawarma</Text>
+                        <FontAwesome name="shopping-cart" size={24} color="red" />
+                    </View>
+                </ImageBackground>
+            </View>
+
+            <ScrollView className="p-4 space-y-4">
+                <Text className="text-xl font-semibold">{menuItem?.name}</Text>
+                <Text className="text-gray-500">{menuItem?.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}</Text>
+                
+                <View className="flex-row items-center space-x-4">
+                    <Pressable onPress={() => setQuantity(quantity > 1 ? quantity - 1 : 1)} className="p-2 bg-gray-200 rounded-full">
+                        <FontAwesome name="minus" size={16} color="black" />
+                    </Pressable>
+                    <Text className="text-lg">{quantity}</Text>
+                    <Pressable onPress={() => setQuantity(quantity + 1)} className="p-2 bg-gray-200 rounded-full">
+                        <FontAwesome name="plus" size={16} color="black" />
+                    </Pressable>
                 </View>
 
-                <View>
-                    <View>
-                        <Text>{menuItem?.name}</Text>
-                        <Text>Category: {menuItem?.category}</Text>
-                    </View>
-
-                    <View style={{ display: "flex", flexDirection: "row", width: 300, justifyContent: "space-around" }}>
-                        <Pressable onPress={() => setQuantity(quantity + 1)}>
-                            <FontAwesome name="plus"/>
+                <View className="space-y-2">
+                {menuItem?.addons.map((addon, index: number) => (
+                        <Pressable key={index} className="border-b border-gray-300 py-2">
+                            <Text className="text-red-500">{addon.foodName}</Text>
                         </Pressable>
-                        <Text>{quantity}</Text>
-                        <Pressable onPress={() => setQuantity((prev) => prev--)}>
-                            <FontAwesome name="minus"/>
-                        </Pressable>
-                    </View>
+                    ))}
                 </View>
 
-                <Button 
+                <View className="pt-4">
+                    <Text className="text-gray-400">Notes:</Text>
+                    <Text className="text-gray-500">E.g. no cucumber, no onions, etc.</Text>
+                </View>
+
+                <Button
                     onPress={() => addItem({
                         user_id: currentUser?.id!,
                         menu_item_id: menuItem?.id!,
                         quantity: quantity,
-                    })} 
-                    color="#F72F2F" 
-                    style={{ alignSelf: "center", width: "100%" }} 
-                    title={`Add to Cart (N ${(menuItem?.price || 0) * quantity})`}
+                    })}
+                    color="#F72F2F"
+                    className="mt-4 py-3 rounded-full"
+                    title={`Add to Cart (₦${(menuItem?.price || 0) * quantity})`}
                 />
-
-
-
-
             </ScrollView>
         </Page>
-    )
+    );
 }
-
-const styles = StyleSheet.create({
-    header: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 12,
-        height: 70
-    },
-    listItem: {
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        height: 90
-    },
-    priceTag: {
-        paddingHorizontal: 12,
-        paddingVertical: 5,
-        borderWidth: 1,
-        borderRadius: 20
-    }
-})

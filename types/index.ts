@@ -1,4 +1,5 @@
 import { CategoryName } from "@/components/CategoriesList";
+import { Timestamp } from "react-native-reanimated/lib/typescript/reanimated2/commonTypes";
 
 export interface Product {
     id: string,
@@ -32,10 +33,12 @@ export interface Addon {
 export interface MenuItem {
     name: string,
     addons: Addon[],
+    restaurantId: string
     price: number,
     id: number,
     category: string,
-    quantity: number
+    quantity: number,
+    description: string,
 }
 
 export interface Vendor {

@@ -92,7 +92,7 @@ export default function HomePage() {
             <ScrollView contentInset={{ bottom: 128 }} showsVerticalScrollIndicator={false}>
 
                 <DefaultView>
-                    <Text style={{ fontWeight: "800", marginTop: 8 }}>Hi There</Text>
+                    <Text>Hi There</Text>
                     <Text style={{ fontWeight: "900", marginVertical: 16, fontSize: 20 }}>What will we be having today?</Text>
                 </DefaultView>
 
