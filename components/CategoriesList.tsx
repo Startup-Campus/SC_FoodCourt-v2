@@ -6,20 +6,20 @@ import Styles from "../constants/Styles";
 import { X } from "lucide-react-native";
 import { Category } from "@/types";
 import { CATEGORIES } from "@/utils/constants";
+import { verticalScale, scale } from 'react-native-size-matters'
 
 
-export type CategoryName = typeof CATEGORIES[number]['name'];
 
 interface CategoriesListProps {
-    onChange?: (category: CategoryName|"all") => void,
+    onChange?: (category: string|"all") => void,
     filteredCategories?: Category[]
 }
 
 const CategoriesList: React.FC<CategoriesListProps> = ({ onChange, filteredCategories }) => {
-    const [_, setCategory] = useState<CategoryName>();
+    const [_, setCategory] = useState<string>();
     const data = filteredCategories ? filteredCategories : CATEGORIES;
 
-    const handleChange = (category: CategoryName) => {
+    const handleChange = (category: string) => {
         if (category === _) {
             setCategory(undefined);
             onChange && onChange("all");
@@ -30,8 +30,8 @@ const CategoriesList: React.FC<CategoriesListProps> = ({ onChange, filteredCateg
     }
 
     return (
-        <View style={Styles.DefaultSpaceY}>
-            <Text style={{ marginBottom: 8, fontWeight: "900", fontSize: 20 }}>
+        <View style={[Styles.DefaultSpaceY, {marginTop: 24}]}>
+            <Text style={{ marginBottom: 16, fontWeight: "900", fontSize: 24, paddingHorizontal: 16 }}>
                 Categories
             </Text>
             <FlatList
@@ -48,7 +48,7 @@ const CategoriesList: React.FC<CategoriesListProps> = ({ onChange, filteredCateg
                                 {
                                     category.name === _ ? <X /> :
 
-                                    <Image style={{ width: 50, height: 50 }} source={category.image} />
+                                    <Image style={{ width: 32, height: 32 }} source={category.image}/>
                                 }
                             </View>
                             <Text>{category.name}</Text>
@@ -69,17 +69,21 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginRight: 12
+        marginRight: 4,
+        left: 8
     },
     itemContainer: {
         borderWidth: 1, 
-        borderRadius: 999,
-        width: 70,
-        height: 70,
+        borderRadius: 54/2,
+        borderColor: "red",
+        marginBottom: verticalScale(8),
+        marginHorizontal: scale(12),
+        width: 54,
+        height: 54,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     vendorCard: {
         backgroundColor: "red",

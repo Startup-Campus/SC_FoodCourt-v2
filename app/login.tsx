@@ -8,13 +8,12 @@ import { SafeAreaView, View } from "react-native";
 import { StyleSheet } from "react-native";
 
 export default function LoginPage() {
-    const primary = useThemeColor({}, "primary");
     const router = useRouter();
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <Page style={{ justifyContent: "center", paddingHorizontal: 16 }}>
-                <View>
+            <Page style={{ paddingTop: 80, paddingHorizontal: 16 }}>
+                <View className="flex-row justify-center mb-10">
                     <Image
                         source={require("../assets/images/login-image.png")}
                         style={{ height: 233, width: 286 }}
@@ -27,17 +26,15 @@ export default function LoginPage() {
 
                 <AuthForm formType="login" />
 
-                <Link href="/create-account" asChild>
-                    <Button 
-                        type="outline" 
-                        buttonStyle={{ borderColor: "#F72F2F" }}
-                        titleStyle={{ color: "#F72F2F" }}
-                        style={{ marginTop: 16 }}
-                    >
-                        New User? Create Account
-                    </Button>
-                </Link>
-                
+                <Button 
+                    type="outline" 
+                    buttonStyle={{ borderColor: "#F72F2F" }}
+                    titleStyle={{ color: "#F72F2F" }}
+                    style={{ marginTop: 16 }}
+                    onPress={() => router.push("/create-account")}
+                >
+                    New User? Create Account
+                </Button>                
             </Page>
         </SafeAreaView>
     )

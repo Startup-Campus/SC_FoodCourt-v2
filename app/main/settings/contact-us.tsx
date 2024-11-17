@@ -1,11 +1,8 @@
-import Button from "../../components/ui/Button";
-import { Text, Page } from '../../components/Themed';
+import Button from "@/components/ui/Button";
+import { Text, Page } from '@/components/Themed';
 import { Image } from "expo-image";
-import { Pressable, View, ScrollView} from "react-native";
-import { Feather, MaterialIcons, Entypo,Ionicons } from '@expo/vector-icons';
-
-import CartItem from '../../components/CartItem';
-import cartItemList from 'mock/cart.json';
+import { Pressable, View } from "react-native";
+import { Entypo, Ionicons } from '@expo/vector-icons';
 
 
 

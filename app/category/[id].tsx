@@ -39,22 +39,24 @@ const CategoryPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flexDirection: 'row',justifyContent:'space-between', width: '55%', alignItems: 'center', marginTop:30}}>
+      <View style={{flexDirection: 'row', gap: 16, alignItems: 'center'}}>
             <Pressable
                   onPress={() => router.back()}
-                  style={{marginTop: 10, marginLeft: 10}}
+                  style={{ marginLeft: 12, marginTop: 8}}
               >
-                <View style={{width: 50, flexDirection: 'row', justifyContent: 'space-between',alignItems:'center', }}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems:'center', }}>
                   <Entypo name="chevron-small-left" size={22} color="#f72f2f" />
                   <Text style={{fontSize:15, textAlign:'center', color:'#f72f2f'}}>Back</Text>
                 </View>
             </Pressable>
           {/* </View> */}
-    
-          <Text style={{fontWeight:'bold', fontSize: 24, textAlign:'center', marginTop: 5}}>{name}</Text>
+          
+          <View style={{width: '60%'}}>
+            <Text style={{ fontWeight:'bold', fontSize: 24, textAlign:'center', marginTop: 8}}>{name}</Text>
+          </View>
         </View>
 
-        <View style={{padding: 15}}>
+        <View style={{padding: 16}}>
           <CategorySearchbar products={categoryProducts} setSearchResults={setSearchResults} />
         </View>
         {/* <View style={styles.searchContainer}>
@@ -75,7 +77,7 @@ const CategoryPage = () => {
                 <View key={vendorId} style={{marginBottom: 20}}>
                     <Text style={styles.restaurantName}>{vendor?.name}</Text>
                     {vendorProducts.map((item: Product) => (
-                      <MenuItem item={item}/>
+                      <MenuItem key={item.id} item={item}/>
                     ))}
                 </View>
             )})}
@@ -85,7 +87,7 @@ const CategoryPage = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'white' },
+  container: { flex: 1, backgroundColor: 'white', paddingTop: 50 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16 },
   title: { fontSize: 24, fontWeight: 'bold' },
   searchContainer: { flexDirection: 'row', alignItems: 'center', margin: 16, padding: 8, borderWidth: 1, borderColor: 'red', borderRadius: 25 },

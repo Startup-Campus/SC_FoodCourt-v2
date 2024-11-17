@@ -1,3 +1,5 @@
+
+import React from "react";
 import CategoriesList from "@/components/CategoriesList";
 import Header from "@/components/Header";
 import { Page } from "@/components/Themed";
@@ -6,66 +8,37 @@ import useThemeColor from "@/hooks/useThemeColor";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Chip, ListItem, Slider } from "@rneui/themed";
 import { useState } from "react";
-import { Pressable, Text, View, ScrollView, StyleSheet } from "react-native";
+import { Pressable, Text, View, ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 
 import vendors from "@/mock/vendors.json";
 import orders from "@/mock/orders.json";
 import Searchbar from "@/components/Searchbar";
 import { OrderItem } from "@/types";
 import OrderSearchbar from "@/components/OrderSearchModal";
+import useOrders from "@/hooks/useOrders";
+import OrderListItem from "@/components/Orders/OrderListItem";
 
 export default function OrdersPage() {
 
     const [searchResults, setSearchResults] = useState<OrderItem[]>([]);
-    const allOrders = (searchResults.length > 0 ? searchResults : orders).reduce((grouped: any, item) => {
-      const { orderId } = item;
-    
-      // Create a new group if it doesn't exist
-      if (!grouped[orderId]) {
-        grouped[orderId] = [];
-      }
-    
-      // Add the current item to the group
-      grouped[orderId].push(item);
-    
-      return grouped;
-    }, {});
 
-    const orderIds = Object.keys(allOrders)
-
+    const { orders, isLoading } = useOrders();
 
     return (
         <Page style={{ paddingHorizontal: 16, paddingTop: 16 }}>
 
             <OrderSearchbar setSearchResults={setSearchResults} />
-            <ScrollView style={{flex: 1}}>
-                <View style={{ height: 16 }} />
-                {
-                    orderIds.map((orderId) => {
-                        const orders = allOrders[orderId] as OrderItem[];
-                        return (
-                            <View key={orderId} style={{ borderWidth: 1, borderRadius: 12, padding: 12, marginVertical: 4 }}>
-                                <Text style={{ fontWeight: 'bold' }}>Order No: {orderId}</Text>
-                                {/* <Text style={{ fontSize: 12, color: 'gray' }}>{orders[0].createdAt}</Text> */}
-                                {
-                                    orders.map((order) => (
-                                        <View key={order.id} style={{ marginVertical: 8 }}>
-                                            {
-                                                order.products.map(({product, quantity}) => (
-                                                    <View key={product.id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <Text>{quantity}x {product.name}</Text>
-                                                        <Text>{product.price}</Text>
-                                                    </View>
-                                                ))
-                                            }
-                                        </View>
-                                    ))
-                                }
-                            </View>
-                        )
-                    })
-                }
-            </ScrollView>
+            {
+                isLoading ? <ActivityIndicator/> : 
+                <ScrollView style={{flex: 1, marginTop: 16}}>
+                    {
+                        orders?.map((order, index) => (
+                            <OrderListItem key={index} order={order} />
+                        ))
+                    }
+                </ScrollView>
+
+            }
 
 
         </Page>

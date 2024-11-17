@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import "../global.css"
+import Toast from 'react-native-toast-message';
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -72,14 +73,13 @@ function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <StatusBar/>
+        <StatusBar style='dark' />
         <Stack initialRouteName={ (session && session.user) ? "main" : "login" } screenOptions={{ headerShown: false }}>
           <Stack.Screen name="main"/>
-          <Stack.Screen name="vendor"/>
-          <Stack.Screen name="item"/>
           <Stack.Screen name="login"/>
           <Stack.Screen name="create-account"/>
         </Stack>
+        <Toast position='top' />
       </ThemeProvider>
     </QueryClientProvider>
   );

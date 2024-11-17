@@ -9,7 +9,15 @@ interface CartItem {
   menu_item_id: number;
   quantity: number;
   user_id: string;
-  menu_item: MenuItem;
+  addon_name?: string;
+  addon_price?: number;
+  menu_item: {
+    resturant_id: number,
+    price: number,
+    name: string,
+    description: string
+  };
+  restaurant_subaccount_code: string
 }
 
 // Interface for adding an item to the cart
@@ -17,6 +25,8 @@ interface AddToCartData {
   menu_item_id: number;
   quantity: number;
   user_id: string;
+  addon_name?: string;
+  addon_price?: number;
 }
 
 export default function useCart(userId: string) {
@@ -30,22 +40,40 @@ export default function useCart(userId: string) {
         menu_item_id,
         quantity,
         user_id,
-        menu_items:menu_item_id (*)
+        addon_name,
+        addon_price,
+        menu_items:menu_item_id (
+          resturant_id,
+          price,
+          name,
+          description,
+          restaurant:resturant_id (
+            subaccount_code
+          )
+        )
       `)
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      //.limit(1, { referencedTable: 'menu_items' })
+      //.limit(1, { referencedTable: 'restaurants' })
 
     if (error) throw new Error(error.message);
 
-    return data.map((item: any) => ({
+
+    return data.map((item) => ({
       id: item.id,
       menu_item_id: item.menu_item_id,
       quantity: item.quantity,
       user_id: item.user_id,
-      menu_item: item.menu_items,
+      menu_item: item.menu_items as any,
+      addon_name: item.addon_name,
+      addon_price: item.addon_price,
+      restaurant_subaccount_code: (item.menu_items as any).restaurant.subaccount_code
     })) as CartItem[];
   }
 
   async function addToCart(data: AddToCartData) {
+    if (!data.user_id) throw new Error("User is not logged in");
+
     const { error } = await supabase
       .from('cart_items')
       .insert(data);
@@ -71,6 +99,14 @@ export default function useCart(userId: string) {
     if (error) throw new Error(error.message);
   }
 
+  function getSingleCartItem(menuItemId: number) {
+    const cartItem = cartItems?.find(
+        (cartItem) => cartItem.menu_item_id === menuItemId
+    );
+    return cartItem;
+}
+
+
   const { data: cartItems, isLoading, error } = useQuery({
     queryKey: ["cart", userId],
     queryFn: getCartItems,
@@ -82,7 +118,7 @@ export default function useCart(userId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart", userId] });
       Toast.show({
-        text1: "Item added to cart",
+        text1: "Item Added to Cart Successfully.",
         type: "success"
       });
     },
@@ -100,7 +136,7 @@ export default function useCart(userId: string) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart", userId] });
       Toast.show({
-        text1: "Cart item updated",
+        text1: "Cart Updated Successfully.",
         type: "success"
       });
     },
@@ -131,6 +167,9 @@ export default function useCart(userId: string) {
     }
   });
 
+  const refreshCart = () => queryClient.invalidateQueries({ queryKey: ["cart", userId] });
+
+
   return {
     cartItems,
     isLoading,
@@ -138,5 +177,7 @@ export default function useCart(userId: string) {
     addItem,
     updateItem,
     removeItem,
+    refreshCart,
+    getSingleCartItem,
   };
 }

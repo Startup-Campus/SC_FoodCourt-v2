@@ -8,17 +8,17 @@ const data = [
   {
     title: 'Hungry?',
     text: 'But you have to walk all the way to place an order?',
-    image: require('assets/images/onboarding-illustration1.png'),
+    image: require('@/assets/images/onboarding-illustration1.png'),
   },
   {
     title: 'Problem Solved',
     text: 'Thanks to SC: FoodCourt you can now order meals from your favorite vendors on your way there!',
-    image: require('assets/images/onboarding-illustration2.png'),
+    image: require('@/assets/images/onboarding-illustration2.png'),
   },
   {
     title: 'What are you waiting for?',
     text: 'Get your meals when you want it.',
-    image: require('assets/images/onboarding-illustration3.png'),
+    image: require('@/assets/images/onboarding-illustration3.png'),
   },
 ];
 

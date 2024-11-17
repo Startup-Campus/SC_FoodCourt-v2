@@ -1,12 +1,12 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, FlatList, Text, Image, Pressable, StyleSheet } from 'react-native';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { router } from "expo-router";
 import useThemeColor from "../hooks/useThemeColor";
 import useDebounce from "@/hooks/useDebounce";
-import categories from "@/mock/categories.json"
-import vendors from "@/mock/vendors.json"
-import products from "@/mock/products.json"
+import categories from "@/mock/categories.json";
+import vendors from "@/mock/vendors.json";
+import products from "@/mock/products.json";
 import MenuItem from '@/components/MenuItem';
 import CategoriesList from './CategoriesList';
 import { Product, Vendor, Category } from '@/types';
@@ -23,7 +23,7 @@ const HomeSearch: React.FC<{setIsSearchActive: React.Dispatch<React.SetStateActi
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const searchbarStyle = {
     borderColor: primary
-}
+  };
 
   useEffect(() => {
     router.setParams({ query: debouncedQuery });
@@ -81,7 +81,8 @@ const HomeSearch: React.FC<{setIsSearchActive: React.Dispatch<React.SetStateActi
       </View>
       {searchResults.length === 0 && query !== '' ? (
         <View className="flex-1 justify-center items-center">
-          <Text className="text-gray-500">Sorry this item cannot be found</Text>
+          <Image source={require('@/assets/images/no-results.png')} style={{width: 150, height: 150}} />
+          <Text className="text-gray-500 mt-4">Sorry this item cannot be found</Text>
         </View>
       ) : ( query !== '' && (
         <View>

@@ -1,5 +1,5 @@
 
-import { Text, Page } from '../../components/Themed';
+import { Text, Page } from '@/components/Themed';
 import { Pressable, View, ScrollView} from "react-native";
 import { Feather, MaterialIcons, Entypo,Ionicons } from '@expo/vector-icons';
 
