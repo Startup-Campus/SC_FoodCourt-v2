@@ -1,12 +1,13 @@
 {
   "expo": {
-    "name": "food-court",
-    "slug": "food-court",
+    "name": "SC: FoodCourt",
+    "slug": "SC: FoodCourt",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -26,14 +27,21 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "output": "single",
+      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you upload profile pictures."
+        }
+      ]
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "tsconfigPaths": true
     }
   }
 }

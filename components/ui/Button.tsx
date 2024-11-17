@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({ buttonStyle, titleStyle, ...restProps }
 const styles = StyleSheet.create({
     defaultButtonStyles: {
         borderRadius: 24,
-        width: "70%",
+        // width: "70%",
     },
     defaultButtonTextStyle: {
         fontWeight: "500",

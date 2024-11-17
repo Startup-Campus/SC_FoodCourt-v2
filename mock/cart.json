@@ -1,0 +1,73 @@
+[
+    {
+      "id": "101",
+      "cartId": "cart123",
+      "product": {
+        "id": "1",
+        "name": "Spaghetti Bolognese",
+        "description": "Classic Italian pasta with meat sauce",
+        "price": 2500,
+        "categoryId": "3",
+        "vendorId": "4",
+        "image": "spaghetti.jpg"
+      },
+      "quantity": 2
+    },
+    {
+      "id": "102",
+      "cartId": "cart123",
+      "product": {
+        "id": "3",
+        "name": "Vegetarian Pizza",
+        "description": "Delicious pizza loaded with fresh veggies",
+        "price": 1800,
+        "categoryId": "4",
+        "vendorId": "1",
+        "image": "vegetarian_pizza.jpg"
+      },
+      "quantity": 1
+    },
+    {
+      "id": "103",
+      "cartId": "cart123",
+      "product": {
+        "id": "5",
+        "name": "Chocolate Lava Cake",
+        "description": "Decadent chocolate cake with a gooey center",
+        "price": 2800,
+        "categoryId": "5",
+        "vendorId": "3",
+        "image": "chocolate_lava_cake.jpg"
+      },
+      "quantity": 3
+    },
+    {
+      "id": "104",
+      "cartId": "cart124",
+      "product": {
+        "id": "8",
+        "name": "Caesar Salad",
+        "description": "Classic Caesar salad with crispy romaine lettuce",
+        "price": 1700,
+        "categoryId": "3",
+        "vendorId": "3",
+        "image": "caesar_salad.jpg"
+      },
+      "quantity": 1
+    },
+    {
+      "id": "105",
+      "cartId": "cart124",
+      "product": {
+        "id": "10",
+        "name": "Fruit Smoothie",
+        "description": "Refreshing fruit smoothie with a mix of berries",
+        "price": 1500,
+        "categoryId": "5",
+        "vendorId": "4",
+        "image": "fruit_smoothie.jpg"
+      },
+      "quantity": 2
+    }
+]
+  

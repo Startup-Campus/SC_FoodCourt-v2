@@ -1,9 +1,8 @@
 import useThemeColor from "@/hooks/useThemeColor"
-import { Icon } from "@expo/vector-icons/build/createIconSet"
 import { StyleProp, StyleSheet, TextInput, View, ViewStyle } from "react-native"
 
 interface InputProps extends React.ComponentProps<typeof TextInput> {
-    icon?: Icon<any, any>,
+    icon?: React.ReactNode,
     containerStyle?: StyleProp<ViewStyle>
 }
 
@@ -16,7 +15,7 @@ const Input: React.FC<InputProps> = ({ icon, containerStyle, ...restProps }) => 
     }
 
     return (
-        <View style={[styles.inputContainer, containerColorsStyle, containerStyle]}>
+        <View style={[styles.inputContainer, containerColorsStyle, containerStyle, icon ? styles.padding: {}]}>
             { icon && <>{icon}</> }
             <TextInput 
                 {...rest}
@@ -33,9 +32,15 @@ const styles = StyleSheet.create({
         height: 50,
         width: "100%",
         borderWidth: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        display: "flex",
     },
     defaultInputStyles: {
         minWidth: "90%"
+    },
+    padding: {
+        paddingHorizontal: 16
     }
 })
 

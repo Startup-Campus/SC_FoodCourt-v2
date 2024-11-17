@@ -1,0 +1,93 @@
+[
+    {
+      "id": "1",
+      "name": "Spaghetti Bolognese",
+      "description": "Classic Italian pasta with meat sauce",
+      "price": 2500,
+      "categoryId": "2",
+      "vendorId": "4",
+      "image": "spaghetti.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Chicken Alfredo",
+      "description": "Creamy Alfredo sauce with grilled chicken",
+      "price": 3200,
+      "categoryId": "2",
+      "vendorId": "2",
+      "image": "chicken_alfredo.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Vegetarian Pizza",
+      "description": "Delicious pizza loaded with fresh veggies",
+      "price": 1800,
+      "categoryId": "8",
+      "vendorId": "1",
+      "image": "vegetarian_pizza.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Sushi Platter",
+      "description": "Assorted sushi rolls with soy sauce",
+      "price": 3500,
+      "categoryId": "5",
+      "vendorId": "5",
+      "image": "sushi_platter.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Chocolate Lava Cake",
+      "description": "Decadent chocolate cake with a gooey center",
+      "price": 2800,
+      "categoryId": "5",
+      "vendorId": "3",
+      "image": "chocolate_lava_cake.jpg"
+    },
+    {
+        "id": "6",
+        "name": "Margherita Pizza",
+        "description": "Classic pizza with tomato, mozzarella, and basil",
+        "price": 2000,
+        "categoryId": "8",
+        "vendorId": "1",
+        "image": "margherita_pizza.jpg"
+      },
+      {
+        "id": "7",
+        "name": "Grilled Salmon",
+        "description": "Freshly grilled salmon with lemon and herbs",
+        "price": 3800,
+        "categoryId": "6",
+        "vendorId": "5",
+        "image": "grilled_salmon.jpg"
+      },
+      {
+        "id": "8",
+        "name": "Caesar Salad",
+        "description": "Classic Caesar salad with crispy romaine lettuce",
+        "price": 1700,
+        "categoryId": "5",
+        "vendorId": "3",
+        "image": "caesar_salad.jpg"
+      },
+      {
+        "id": "9",
+        "name": "Beef Tacos",
+        "description": "Tasty beef tacos with salsa and guacamole",
+        "price": 2600,
+        "categoryId": "3",
+        "vendorId": "2",
+        "image": "beef_tacos.jpg"
+      },
+      {
+        "id": "10",
+        "name": "Fruit Smoothie",
+        "description": "Refreshing fruit smoothie with a mix of berries",
+        "price": 1500,
+        "categoryId": "4",
+        "vendorId": "4",
+        "image": "fruit_smoothie.jpg"
+    }
+]
+  

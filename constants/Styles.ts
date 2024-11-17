@@ -4,10 +4,10 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 const Styles = StyleSheet.create({
     DefaultPaddingX: {
-        paddingHorizontal: 12
+        paddingHorizontal: 16
     },
     DefaultSpaceY: {
-        marginVertical: 12
+        marginVertical: 16
     },
     ImageBackground: { 
         width: "100%", 
@@ -16,10 +16,15 @@ const Styles = StyleSheet.create({
         zIndex: -10, 
     },
     ProfileSettingsContainer: {
-        width: screenWidth,
+        // width: screenWidth,
+        alignItems: "center",
+        borderTopStartRadius: 35,
         borderTopEndRadius: 35,
-        backgroundColor: "#F34A4A",
-        minHeight: 350
+        backgroundColor: "#F72F2F",
+        paddingVertical: 8,
+        paddingBottom: 24,
+        //maxHeight: 350,
+        flex: 1
     },
     FlexCenterJustifyBetween: {
         display: "flex",
