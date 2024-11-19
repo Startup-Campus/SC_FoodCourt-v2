@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import useThemeColor from "../hooks/useThemeColor";
 import { Link } from "expo-router";
 import DrawerButton from "./DrawerButton";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface HeaderProps {
     pageTitle: 'Home' | 'Profile' | 'Order History' | 'Settings'
@@ -13,8 +14,10 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ pageTitle, altColor, altBack }) => {
     const primaryColor = useThemeColor({}, "primary");
 
+    const { top } = useSafeAreaInsets();
+
     return (
-        <View style={{...styles.header, backgroundColor: altBack ? "#f72f2f" : "#fff"}}>
+        <View style={{...styles.header, backgroundColor: altBack ? "#f72f2f" : "#fff" }}>
             <DrawerButton iconColor={altColor ? "#fff" : primaryColor}/>
 
             {pageTitle === 'Order History' ? <Text style= {{fontSize: 20, fontWeight: 600}}>{pageTitle}</Text> : null }
