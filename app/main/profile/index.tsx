@@ -21,7 +21,7 @@ export default function ProfilePage() {
     const imageUrl = currentUser?.image_url ?? `https://api.dicebear.com/9.x/adventurer/png?seed=${currentUser?.full_name}`;
 
     return (
-        <Page>
+        <Page scrollBg="#F72F2F" scrollBottomPadding={0}>
 
             <EditProfilePhoto imageUrl={imageUrl} />
 
